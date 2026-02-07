@@ -10,7 +10,7 @@ import SwiftUI
 struct ContentView: View {
   
   @State private var message: String = "Roll a die!"
-  private let diceTypes: [Int] = [4, 6, 8, 10, 12, 20]
+  private let diceTypes: [Int] = [4, 6, 8, 10, 12, 20, 100]
   
   var body: some View {
     VStack {
@@ -27,84 +27,23 @@ struct ContentView: View {
       
       Spacer()
       
-      Group {
+      LazyVGrid(columns: [GridItem(.adaptive(minimum: 110))]) {
         ForEach(diceTypes, id: \.self) { diceType in
-          Button {// 4 sided die
+          Button {
             rollDie(sides: diceType)
           } label: {
             Text("\(diceType)-Sided")
           }
+          .font(.title2)
+          .lineLimit(1)
+          .fixedSize(horizontal: true, vertical: true)
+          .buttonStyle(.glassProminent)
+          .tint(.red)
         }
       }
-      .font(.title2)
-      .buttonStyle(.glassProminent)
-      .foregroundStyle(.white)
-      .tint(.red)
 
 
-
-      //          VStack {
-      //            HStack {
-      //              Button {// 4 sided die
-      //                rollDie(sides: 4)
-      //              } label: {
-      //                Text("4-Sided")
-      //              }
-      //
-      //              Spacer()
-      //
-      //              Button {// 6 sided die
-      //                rollDie(sides: 6)
-      //              } label: {
-      //                Text("6-Sided")
-      //              }
-      //
-      //              Spacer()
-      //
-      //              Button {// 8 sided die
-      //                rollDie(sides: 8)
-      //              } label: {
-      //                Text("8-Sided")
-      //              }
-      //
-      //            }
-      //            HStack {
-      //              Button {// 10 sided die
-      //                rollDie(sides: 10)
-      //              } label: {
-      //                Text("10-Sided")
-      //              }
-      //
-      //              Spacer()
-      //
-      //              Button {// 12 sided die
-      //                rollDie(sides: 12)
-      //              } label: {
-      //                Text("12-Sided")
-      //              }
-      //
-      //              Spacer()
-      //
-      //              Button {// 20 sided die
-      //                rollDie(sides: 20)
-      //              } label: {
-      //                Text("20-Sided")
-      //              }
-      //
-      //            }
-      //            HStack {
-      //              Button {// 100 sided die
-      //                rollDie(sides: 100)
-      //              } label: {
-      //                Text("100-Sided")
-      //              }
-      //
-      //            }
-      //          }
-      //          .font(.title2)
-      //          .buttonStyle(.glassProminent)
-      //          .foregroundStyle(.white)
-      //          .tint(.red)
+      
     }
     .padding()
   }
