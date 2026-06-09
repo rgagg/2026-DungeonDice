@@ -10,22 +10,9 @@
 		B296105D2FD5273C009D27A5 /* 2026-DungeonDice.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "2026-DungeonDice.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
-/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		B296106C2FD52920009D27A5 /* Exceptions for "2026-DungeonDice" folder in "2026-DungeonDice" target */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				"-026-DungeonDice-Info.plist",
-			);
-			target = B296105C2FD5273C009D27A5 /* 2026-DungeonDice */;
-		};
-/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
-
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		B296105F2FD5273C009D27A5 /* 2026-DungeonDice */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-				B296106C2FD52920009D27A5 /* Exceptions for "2026-DungeonDice" folder in "2026-DungeonDice" target */,
-			);
 			path = "2026-DungeonDice";
 			sourceTree = "<group>";
 		};
