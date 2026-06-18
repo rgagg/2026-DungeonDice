@@ -9,6 +9,8 @@ import SwiftUI
 
 struct ContentView: View {
   @State private var message: String = "Roll a die!"
+  @State private var animationTrigger = false
+  @State private var isDoneAnimating = true
   
   var body: some View {
     VStack {
@@ -22,12 +24,24 @@ struct ContentView: View {
       Text(message)
         .font(.largeTitle)
         .multilineTextAlignment(.center)
-      
+//        .scaleEffect(isDoneAnimating ? 1.0 : 0.5)
+        .opacity(isDoneAnimating ? 1.0 : 0.25)
+        .rotation3DEffect(isDoneAnimating ? .degrees(360) : .degrees(0), axis: (1, 0, 0))
+        .onChange(of: animationTrigger) {
+          isDoneAnimating = false
+//          withAnimation(.spring(response: 0.3, dampingFraction: 0.4)) {
+//            isDoneAnimating = true
+//          }
+          withAnimation(.interpolatingSpring(duration: 0.8, bounce: 0.4)) {
+            isDoneAnimating = true
+          }
+        }
       Spacer()
       
       LazyVGrid(columns: [GridItem(.adaptive(minimum: 110))]) {
         ForEach(Dice.allCases) { die in
           Button {
+            animationTrigger.toggle()
             message = "You rolled a \(die.roll) on a \(die.name)-sided die"
           } label: {
             Text("\(die.rawValue)-sided")
