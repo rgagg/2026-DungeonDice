@@ -8,13 +8,13 @@
 import SwiftUI
 
 enum Dice: Int, CaseIterable, Identifiable {
-  case four = 4
-  case six = 6
-  case eight = 8
-  case ten = 10
-  case twelve = 12
-  case twenty = 20
-  case hundred = 100
+  case d4 = 4
+  case d6 = 6
+  case d8 = 8
+  case d10 = 10
+  case d12 = 12
+  case d20 = 20
+  case d100 = 100
   
   var id: Int {
     return self.rawValue
