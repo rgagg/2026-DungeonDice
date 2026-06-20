@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct ContentView: View {
-  
   @State private var message: String = "Roll a die!"
   @State private var animationTrigger = false
   @State private var isDoneAnimating = true
