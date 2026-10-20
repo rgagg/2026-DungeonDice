@@ -11,6 +11,7 @@ struct ContentView: View {
   
   @State private var message: String = "Roll a die!"
   
+  private var diceTypes: [Int] = [4, 6, 8, 10, 12, 20, 100]
   
     var body: some View {
         VStack {
@@ -27,66 +28,17 @@ struct ContentView: View {
           
           Spacer()
           
-          VStack {
-            HStack {
+            ForEach(diceTypes, id: \.self) { diceType in
               Button {
-                rollDie(sides: 4)
+                rollDie(sides: diceType)
               } label: {
-                Text ("4-Sided")
-              }
-
-              Spacer()
-              
-              Button {
-                rollDie(sides: 6)
-              } label: {
-                Text ("6-Sided")
-              }
-              
-              Spacer()
-              
-              Button {
-                rollDie(sides: 8)
-              } label: {
-                Text ("8-Sided")
+                Text ("\(diceType)-Sided")
               }
             }
-            
-            
-            HStack {
-              Button {
-                rollDie(sides: 10)
-              } label: {
-                Text ("10-Sided")
-              }
-
-              Spacer()
-              
-              Button {
-                rollDie(sides: 12)
-              } label: {
-                Text ("12-Sided")
-              }
-              
-              Spacer()
-              
-              Button {
-                rollDie(sides: 20)
-              } label: {
-                Text ("20-Sided")
-              }
-            }
-            
-            Button {
-              rollDie(sides: 100)
-            } label: {
-              Text ("100-Sided")
-            }
-          }
           .buttonStyle(.glassProminent)
           .tint(.red)
           .font(.title2)
-          
+                    
         }
         .padding()
     }
