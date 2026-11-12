@@ -9,9 +9,34 @@ import SwiftUI
 
 struct ContentView: View {
   
-  @State private var message: String = "Roll a die!"
+  enum Dice: Int, CaseIterable, Identifiable {
+    
+    case four = 4
+    case six = 6
+    case eight = 8
+    case ten = 10
+    case twelve = 12
+    case twenty = 20
+    case hundred = 100
+    
+    var id: Int {
+      return self.rawValue
+    }
+    
+    var dieName: String {
+      return "\(self)".capitalized
+    }
+    
+    var buttonLabel: String {
+      return "\(self.rawValue)-Sided"
+    }
+    
+    var roll: Int {
+      return Int.random(in: 1...self.rawValue)
+    }
+  }
   
-  private var diceTypes: [Int] = [4, 6, 8, 10, 12, 20, 100]
+  @State private var message: String = "Roll a die!"
   
   var body: some View {
     VStack {
@@ -22,18 +47,20 @@ struct ContentView: View {
       
       Spacer()
       
-      Text ("\(message)")
+      Text (message)
         .font(.largeTitle)
         .multilineTextAlignment(.center)
       
       Spacer()
       
       LazyVGrid(columns: [GridItem(.adaptive(minimum: 110))]) {
-        ForEach(diceTypes, id: \.self) { diceType in
+        
+        ForEach(Dice.allCases) { die in
           Button {
-            rollDie(sides: diceType)
+            message = ("You rolled a \(die.roll) on a \(die.dieName) sided die.")
+            
           } label: {
-            Text ("\(diceType)-Sided")
+            Text ("\(die.buttonLabel)")
           }
         }
         .font(.title2)
@@ -41,19 +68,14 @@ struct ContentView: View {
         .fixedSize(horizontal: true, vertical: false)
         .buttonStyle(.glassProminent)
         .tint(.red)
+        
+        
       }
-      
+      .padding()
     }
-    .padding()
-  }
-  
-  func rollDie (sides: Int) {
-    let result = Int.random(in: 1..<sides)
     
-    message = ("You rolled a \(result) on a \(sides) sided die.")
   }
 }
-
 
 
 
@@ -67,3 +89,4 @@ struct ContentView: View {
   ContentView()
     .preferredColorScheme(.dark)
 }
+
