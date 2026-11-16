@@ -10,6 +10,11 @@ import SwiftUI
 struct ContentView: View {
   
   @State private var message: String = "Roll a die!"
+  @State private var rolls: [Int] = []
+  private var grandTotal: Int {
+    rolls.reduce(0, +)
+  }
+  
   @State private var animationTrigger: Bool = true
   @State private var isDoneAnimating: Bool = true
   
@@ -20,10 +25,52 @@ struct ContentView: View {
         .fontWeight(.black)
         .foregroundStyle(.red)
       
+      GroupBox {
+        ForEach(rolls, id: \.self) { roll in
+          Text("\(roll)")
+            .frame(maxWidth: .infinity, alignment: .leading)
+          
+          Divider()
+        }
+                
+        HStack {
+          Text("Total: \(grandTotal)")
+            .font(.title2)
+            .fontWeight(.semibold)
+            .monospacedDigit()
+            .contentTransition(.numericText())
+            .animation(.default, value: grandTotal)
+          
+          Spacer()
+          
+          Button {
+            rolls.removeAll()
+          } label: {
+            Text("Clear")
+          }
+          .font(.title3)
+          .fontWeight(.semibold)
+          .lineLimit(1)
+          .fixedSize(horizontal: true, vertical: false)
+          .buttonStyle(.glassProminent)
+          .tint(.blue)
+          .disabled(rolls.isEmpty)
+          
+        }
+
+      } label: {
+        Text("Session Rolls:")
+          .font(.title2)
+          .fontWeight(.bold)
+      }
+      
+      
       Spacer()
       
       Text (message)
         .font(.largeTitle)
+        .lineLimit(1)
+        .fixedSize(horizontal: true, vertical: false)
         .multilineTextAlignment(.center)
         .opacity(isDoneAnimating ? 1.0 : 0.2)
         .rotation3DEffect(isDoneAnimating ? .degrees(360) : .degrees(0), axis: (x:1, y:0, z:0))
@@ -33,13 +80,15 @@ struct ContentView: View {
             isDoneAnimating = true
           }
         }
-      Spacer()
+      //      Spacer()
       
       LazyVGrid(columns: [GridItem(.adaptive(minimum: 110))]) {
         
         ForEach(Dice.allCases) { die in
           Button {
-            message = ("You rolled a \(die.roll) on a \(die.dieName) sided die.")
+            let roll = die.roll
+            rolls.append(roll)
+            message = ("You rolled a \(roll) on a \(die.dieName).")
             animationTrigger.toggle()
             
           } label: {
@@ -61,13 +110,13 @@ struct ContentView: View {
   
   enum Dice: Int, CaseIterable, Identifiable {
     
-    case four = 4
-    case six = 6
-    case eight = 8
-    case ten = 10
-    case twelve = 12
-    case twenty = 20
-    case hundred = 100
+    case d4 = 4
+    case d6 = 6
+    case d8 = 8
+    case d10 = 10
+    case d12 = 12
+    case d20 = 20
+    case d100 = 100
     
     var id: Int {
       return self.rawValue
